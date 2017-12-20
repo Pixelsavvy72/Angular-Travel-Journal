@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Output } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output, SecurityContext } from '@angular/core';
 import { LocationsDataService } from '../../../locationsData.service';
 import { Location } from '../../../models/locationModel';
 import * as moment from 'moment';
@@ -6,7 +6,7 @@ import { Validators, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { IcDatepickerOptionsInterface } from 'ic-datepicker';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LocationSelectedService } from '../../../locationSelected.service';
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 
@@ -26,7 +26,8 @@ export class LocAddComponent implements OnInit {
   constructor(private locationsDataService: LocationsDataService,
               private locationSelectedService: LocationSelectedService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.datepickerOptions = {
@@ -54,10 +55,11 @@ export class LocAddComponent implements OnInit {
 
   onAddLocation() {
 
-    this.newLocation.name = this.addLocationForm.value.locationData.nameInput;
-    this.newLocation.description = this.addLocationForm.value.locationData.descriptionInput;
+    this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
+    this.newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.descriptionInput);
+
     this.newLocation.image = this.addLocationForm.value.locationData.images;
-    // TODO: Fix this later
+
     this.newLocation.dateActual = Date.now();
     if (!this.addLocationForm.value.locationData.dateInput) {
        this.newLocation.dateView = this.dateNow;
