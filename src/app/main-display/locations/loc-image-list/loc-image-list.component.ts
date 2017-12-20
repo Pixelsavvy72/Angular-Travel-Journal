@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LocationsDataService } from '../../../locationsData.service';
 import { LocationSelectedService } from '../../../locationSelected.service';
+import { Location } from '../../../models/locationModel';
 
 @Component({
   selector: 'app-loc-image-list',
@@ -9,7 +10,7 @@ import { LocationSelectedService } from '../../../locationSelected.service';
 })
 export class LocImageListComponent implements OnInit {
 
-  selectedLocation = {};
+  selectedLocation: Location = {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''};
 
   constructor(private locationsDataService: LocationsDataService,
               private locationSelectedService: LocationSelectedService) { }

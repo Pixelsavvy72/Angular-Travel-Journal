@@ -48,6 +48,10 @@ export class LocAddComponent implements OnInit {
     (<FormArray>this.addLocationForm.get('locationData.images')).push(control);
     }
 
+  getImageControls() {
+    return(<FormArray>this.addLocationForm.get('locationData.images')).controls;
+  }
+
   onAddLocation() {
 
     this.newLocation.name = this.addLocationForm.value.locationData.nameInput;

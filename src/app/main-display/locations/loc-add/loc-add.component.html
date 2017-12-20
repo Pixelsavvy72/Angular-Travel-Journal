@@ -50,11 +50,11 @@
                 </button>
                 <div
                 class="form-group"
-                *ngFor="let imageControl of addLocationForm.get('locationData.images').controls; let i = index">
+                *ngFor="let imageControl of getImageControls(); let i = index">
                     <label for="image">Image {{i + 1}}</label><br>
                     <input type="text" class="form-control" [formControlName]="i">
                 </div>
-                <div *ngFor="let image of addLocationForm.get('locationData.images').controls">
+                <div *ngFor="let image of getImageControls()">
                   <div class="col-xs-6" *ngIf="image.value">
                     <img class="img img-responsive" [src]="image.value">
 

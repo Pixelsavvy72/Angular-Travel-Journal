@@ -1,6 +1,10 @@
 {
   "name": "trip-journal-app",
   "version": "0.0.0",
+  "engines": {
+    "node": "8.4.x",
+    "npm": "5.3.x"
+  },
   "license": "MIT",
   "scripts": {
     "postinstall": "ng build --aot -prod",
@@ -10,10 +14,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
-  },
-  "engines": {
-    "node": "8.4.0",
-    "npm": "5.3.0"
   },
   "private": true,
   "dependencies": {
@@ -33,9 +33,12 @@
     "moment": "^2.19.3",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14",
-    "@angular/cli": "1.5.2"
+    "@angular/cli": "1.5.2",
+    "@angular/compiler-cli": "^5.0.0",
+    "typescript": "~2.4.2"
   },
   "devDependencies": {
+    "@angular/cli": "1.5.2",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
     "@types/jasmine": "~2.5.53",
