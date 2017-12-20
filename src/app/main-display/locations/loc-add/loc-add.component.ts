@@ -63,10 +63,10 @@ export class LocAddComponent implements OnInit {
     this.newLocation.dateActual = Date.now();
     if (!this.addLocationForm.value.locationData.dateInput) {
        this.newLocation.dateView = this.dateNow;
+       this.newLocation.dateActual = Date.now();
      } else {
        this.newLocation.dateView = this.addLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
      }
-    console.log(this.addLocationForm.value.locationData.dateInput.value);
 
     this.locationsDataService.addLocation(this.newLocation);
     this.locationSelectedService.locationSelected.next(
