@@ -1,6 +1,6 @@
 # TripJournalApp
 
-In progress but functional. Have ago https://sheltered-oasis-25823.herokuapp.com/
+In progress but functional. Have a go at https://sheltered-oasis-25823.herokuapp.com/
 
 ## Todos:
 
