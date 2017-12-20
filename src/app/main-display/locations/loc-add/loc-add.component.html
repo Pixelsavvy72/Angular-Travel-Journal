@@ -44,15 +44,19 @@
 
               <div formArrayName="images">
                   <button
+                  style="margin-bottom: .5em;"
                   class="btn btn-info"
                   type="button"
-                  (click)="onAddImages()">Add Image
+                  (click)="onAddImages()">Add Images
                 </button>
                 <div
                 class="form-group"
                 *ngFor="let imageControl of getImageControls(); let i = index">
-                    <label for="image">Image {{i + 1}}</label><br>
-                    <input type="text" class="form-control" [formControlName]="i">
+                    <label for="image">Image {{i + 1}} url:</label><br>
+                    <input type="text"
+                    class="form-control"
+                    [formControlName]="i"
+                    placeholder="http://www.example.com/my-image.png">
                 </div>
                 <div *ngFor="let image of getImageControls()">
                   <div class="col-xs-6" *ngIf="image.value">
