@@ -1,0 +1,11 @@
+<div class="container col-sm-3">
+  <div class="row">
+      <div id="content">
+          <div *ngFor="let eachImage of selectedLocation.image">
+            <img class="img-responsive" [src]="eachImage">
+            <hr>
+          </div>
+
+      </div>
+  </div>
+</div>

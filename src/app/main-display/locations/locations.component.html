@@ -1,0 +1,18 @@
+<div class="container col-sm-7">
+  <div class="row">
+    <div id="content">
+      <div *ngIf="locationSet; else noLocation">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <ng-template #noLocation>
+      <p id="entry-text">
+        Please select a location or add a new entry.
+      </p>
+      <p><span style="color: red">Note: </span>This application is for demo purposes and does not persist data.
+        Changes made will be lost when refreshing the page or when navigating away.
+        Thanks for looking!</p>
+
+    </ng-template>
+  </div>
+</div>
