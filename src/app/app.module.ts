@@ -21,10 +21,10 @@ import { IcDatepickerModule, IcDatepickerService } from 'ic-datepicker';
     LocSidebarComponent,
     MainDisplayComponent,
     LocAddComponent,
-    LocEditComponent,
     LocShowComponent,
     LocImageListComponent,
-    LocationsComponent
+    LocationsComponent,
+    LocEditComponent
   ],
   imports: [
     BrowserModule,
