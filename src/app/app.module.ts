@@ -23,8 +23,8 @@ import { IcDatepickerModule, IcDatepickerService } from 'ic-datepicker';
     LocAddComponent,
     LocShowComponent,
     LocImageListComponent,
-    LocationsComponent,
-    LocEditComponent
+    LocEditComponent,
+    LocationsComponent
   ],
   imports: [
     BrowserModule,
