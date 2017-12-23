@@ -1,4 +1,9 @@
-
-  <h2 class="handwritten">{{ selectedLocation.name }}</h2>
-  <p id="desc">{{ selectedLocation.description }}</p>
-  <button class="btn btn-warning disabled" (click)="onEditLocation()">Edit Location</button>
+<div class="container col-sm-7">
+  <div class="row">
+    <div id="content">
+      <h2 class="handwritten">{{ selectedLocation.name }}</h2>
+      <p id="desc">{{ selectedLocation.description }}</p>
+      <button class="btn btn-warning disabled" (click)="onEditLocation()">Edit Location</button>
+    </div>
+  </div>
+</div>

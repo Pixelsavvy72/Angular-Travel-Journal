@@ -15,6 +15,7 @@ import { LocationSelectedService } from '../../../locationSelected.service';
 export class LocShowComponent implements OnInit {
   locationSet: Boolean = false;
   selectedLocation: Location = {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''};
+  id: number;
   constructor(private locationsDataService: LocationsDataService,
               private locationSelectedService: LocationSelectedService,
               private route: ActivatedRoute,
@@ -31,8 +32,9 @@ export class LocShowComponent implements OnInit {
     // This changes location based on route params instead.
     this.route.params.subscribe(
       (params: Params) => {
-        this.selectedLocation = this.locationsDataService.getLocation(params['id']);
-        return this.route.params;
+        this.id = +params['id'];
+        this.selectedLocation = this.locationsDataService.getLocation(this.id);
+        // return this.route.params;
       });
 
   }

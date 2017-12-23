@@ -9,13 +9,12 @@ import { LocationsComponent } from './main-display/locations/locations.component
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'add', component: LocAddComponent },
-  // { path: 'location', component: LocationsComponent, children: [
-    { path: 'home', component: LocationsComponent, children: [
-      { path: '', component: LocShowComponent},
-      { path: ':id', component: LocShowComponent},
-      { path: ':id/edit', component: LocEditComponent}
-    ] },
+  { path: 'home', component: LocationsComponent },
+  { path: 'home/', component: LocShowComponent},
+  { path: 'home/:id', component: LocShowComponent},
+  { path: 'home/:id/edit', component: LocEditComponent},
   { path: '**', redirectTo: '/home'}
+
 ];
 
 @NgModule({
