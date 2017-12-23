@@ -1,4 +1,4 @@
- - Upon leaving add location, double click is needed to select a new location. Change to single click.
+ - Save state when manually entering url.
  - Add edit functionality
  - Sort list array by date.
  - Add geolocation and google maps integration.
