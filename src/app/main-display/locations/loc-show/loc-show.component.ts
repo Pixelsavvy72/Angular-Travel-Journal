@@ -23,11 +23,6 @@ export class LocShowComponent implements OnInit {
 
 
   ngOnInit() {
-    // Below changes location based on locationSelectedService
-    // this.locationSelectedService.locationSelected.subscribe(
-    //    (location: Location) => this.selectedLocation = location
-    //  );
-
 
     // This changes location based on route params instead.
     this.route.params.subscribe(
@@ -35,6 +30,7 @@ export class LocShowComponent implements OnInit {
         this.id = +params['id'];
         this.selectedLocation = this.locationsDataService.getLocation(this.id);
         // return this.route.params;
+        this.locationSelectedService.locationSelected.next(this.selectedLocation);
       });
 
   }
