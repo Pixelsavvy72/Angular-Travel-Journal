@@ -6,6 +6,7 @@ In progress but functional. Have a go at http://travel-journal-pir.s3-website-us
  - Add edit functionality
  - Sort list array by date.
  - Add geolocation and google maps integration. 
+ - Save state when manually entering url.
 
 
 
