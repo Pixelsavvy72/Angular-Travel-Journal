@@ -14,7 +14,7 @@ import { LocationSelectedService } from '../../../locationSelected.service';
 
 export class LocShowComponent implements OnInit {
   locationSet: Boolean = false;
-  selectedLocation: Location = {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''};
+  selectedLocation: Location = {dateActual: '', dateView: Date.now().toString(), name: '', image: [], description: ''};
   id: number;
   constructor(private locationsDataService: LocationsDataService,
               private locationSelectedService: LocationSelectedService,

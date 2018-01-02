@@ -81,7 +81,7 @@ export class LocEditComponent implements OnInit {
 
   onEditLocation() {
     const newLocation: Location = {
-       dateActual: this.dateActual,
+       dateActual: this.editLocationForm.value.locationData.dateInput.format(),
        dateView: this.editLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY'),
        name: this.editLocationForm.value.locationData.nameInput,
        image: this.editLocationForm.value.locationData.images,

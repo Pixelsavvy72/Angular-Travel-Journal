@@ -10,7 +10,7 @@ import { Location } from '../../../models/locationModel';
 })
 export class LocImageListComponent implements OnInit {
 
-  selectedLocation: Location = {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''};
+  selectedLocation: Location = {dateActual: '', dateView: Date.now().toString(), name: '', image: [], description: ''};
 
   constructor(private locationsDataService: LocationsDataService,
               private locationSelectedService: LocationSelectedService) { }
