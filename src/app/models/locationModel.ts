@@ -1,7 +1,7 @@
 export class Location {
   constructor(
     // For sorting
-    public dateActual: number,
+    public dateActual: string,
     // For display
     public dateView: string,
     public name: string,

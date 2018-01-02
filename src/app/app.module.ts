@@ -12,7 +12,7 @@ import { LocationsDataService } from './locationsData.service';
 import { LocationSelectedService } from './locationSelected.service';
 import { AppRoutingModule } from './app-routing.module';
 import { LocationsComponent } from './main-display/locations/locations.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IcDatepickerModule, IcDatepickerService } from 'ic-datepicker';
 
 @NgModule({
@@ -29,6 +29,7 @@ import { IcDatepickerModule, IcDatepickerService } from 'ic-datepicker';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     IcDatepickerModule
   ],

@@ -1,4 +1,2 @@
- - Save state when manually entering url.
- - Add edit functionality
  - Sort list array by date.
  - Add geolocation and google maps integration.

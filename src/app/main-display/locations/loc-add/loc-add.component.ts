@@ -19,8 +19,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class LocAddComponent implements OnInit {
   datepickerOptions: IcDatepickerOptionsInterface;
   dateNow = moment().format('MMMM  Do, YYYY');
+  dateNowNoFormat = moment().format();
   addLocationForm: FormGroup;
-  newLocation: Location = {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''};
+  newLocation: Location = {dateActual: this.dateNowNoFormat, dateView: this.dateNow, name: '', image: [], description: ''};
   value: any;
 
   constructor(private locationsDataService: LocationsDataService,
@@ -30,9 +31,7 @@ export class LocAddComponent implements OnInit {
               private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.datepickerOptions = {
-      disableWeekends: true
-    };
+
     this.addLocationForm = new FormGroup({
       'locationData' : new FormGroup({
         'nameInput' : new FormControl(null, Validators.required),
@@ -60,19 +59,20 @@ export class LocAddComponent implements OnInit {
 
     this.newLocation.image = this.addLocationForm.value.locationData.images;
 
-    this.newLocation.dateActual = Date.now();
+    this.newLocation.dateActual = this.dateNowNoFormat;
     if (!this.addLocationForm.value.locationData.dateInput) {
        this.newLocation.dateView = this.dateNow;
-       this.newLocation.dateActual = Date.now();
+       this.newLocation.dateActual = this.dateNowNoFormat;
      } else {
        this.newLocation.dateView = this.addLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
+       this.newLocation.dateActual = this.addLocationForm.value.locationData.dateInput.format();
      }
 
     this.locationsDataService.addLocation(this.newLocation);
     this.locationSelectedService.locationSelected.next(
       {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''}
     );
-    this.addLocationForm.reset();
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 }

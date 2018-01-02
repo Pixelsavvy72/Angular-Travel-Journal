@@ -19,7 +19,16 @@ export class LocSidebarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.locations = this.locationsDataService.sampleData;
+    this.locations = this.locationsDataService.sampleData.sort(function(a, b) {
+      return  +new Date(b.dateActual) - +new Date(a.dateActual);
+    });
+    this.locationsDataService.sampleDataChanged.subscribe(
+      (sampleData: Location[]) => {
+        this.locations = sampleData.sort(function(a, b) {
+          return  +new Date(b.dateActual) - +new Date(a.dateActual);
+        });
+      }
+    );
 
   }
 

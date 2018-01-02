@@ -1,3 +1,86 @@
-<p>
-  loc-edit
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6" id="content">
+      <form [formGroup]="editLocationForm" (ngSubmit)="onEditLocation()">
+          <button class="btn btn-success btn-sm" type="submit" [disabled]="!editLocationForm.valid">Save</button>
+          <button class="btn btn-danger btn-sm pull-right" (click)="onDeleteLocation()">X Delete</button>
+          <button class="btn btn-warning btn-sm" (click)="onCancel()">Cancel</button>
+
+
+          <hr>
+        <div formGroupName="locationData">
+          <div class="form-group">
+
+            <label for="name">Location Name</label><br>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nameInput"
+              placeholder="City, State, Home, Etc.">
+              <span *ngIf="!editLocationForm.get('locationData.nameInput').valid &&
+                            editLocationForm.get('locationData.nameInput').touched"
+                            class="help-block">Location name is required.</span>
+
+              <br>
+              <label for="description">Description</label><br>
+              <textarea
+              type="text"
+              rows="6"
+              class="form-control"
+              formControlName="descriptionInput"
+              #descriptionInput></textarea><br>
+
+              <label for="date">Date  <span style="color: grey">Currently: {{currentDate}}</span></label><br>
+              <div class="row">
+                <div class="col-xs-1 text-right">
+                  <i class="material-icons" style="color: steelblue">date_range</i>
+                </div>
+                <div class="col-xs-10">
+                    <ic-datepicker
+                    id="datepicker"
+                    formControlName="dateInput"
+                    options="datepickerOptions"
+                    >
+                  </ic-datepicker>
+                </div>
+              </div>
+              <br>
+
+              <div formArrayName="images">
+                  <button
+                  style="margin-bottom: .5em;"
+                  class="btn btn-info"
+                  type="button"
+                  (click)="onAddImages()">Add Images
+                </button>
+                <div
+                class="form-group"
+                *ngFor="let imageControl of getImageControls(); let i = index">
+                    <label for="image">Image {{i + 1}} url:</label><br>
+                    <input type="text"
+                    class="form-control"
+                    [formControlName]="i"
+                    placeholder="http://www.example.com/my-image.png">
+                </div>
+                <div *ngFor="let image of getImageControls()">
+                  <div class="col-xs-6" *ngIf="image.value">
+                    <img class="img img-responsive" [src]="image.value">
+
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+
+
+          </div>
+
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+
