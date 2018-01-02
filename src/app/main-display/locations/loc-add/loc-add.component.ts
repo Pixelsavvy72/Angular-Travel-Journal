@@ -53,11 +53,14 @@ export class LocAddComponent implements OnInit {
   }
 
   onAddLocation() {
-
     this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
     this.newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.descriptionInput);
 
     this.newLocation.image = this.addLocationForm.value.locationData.images;
+    if (!this.newLocation['images']) {
+      const noImagePlaceholder = 'http://via.placeholder.com/350x150?text=No+Image+Available';
+      this.newLocation.image.push(noImagePlaceholder);
+    }
 
     this.newLocation.dateActual = this.dateNowNoFormat;
     if (!this.addLocationForm.value.locationData.dateInput) {

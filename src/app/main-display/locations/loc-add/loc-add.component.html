@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container col-sm-7">
   <div class="row">
-    <div class="col-sm-6" id="content">
+    <div class="row" id="content">
       <form [formGroup]="addLocationForm" (ngSubmit)="onAddLocation()">
           <button class="btn btn-success btn-sm" type="submit" [disabled]="!addLocationForm.valid">Add Location</button>
           <button class="btn btn-warning btn-sm pull-right" routerLink="">Cancel</button>

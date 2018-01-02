@@ -89,8 +89,6 @@ export class LocEditComponent implements OnInit {
     };
 
     if (this.editMode) {
-      console.log(this.locationDataService.getLocation(this.id));
-      console.log(newLocation);
       this.locationDataService.editLocation(this.id, newLocation);
     } else {
       this.locationDataService.addLocation(newLocation);
