@@ -1,1 +1,1 @@
- - Add geolocation and google maps integration.
+  - Add geolocation and google maps integration.

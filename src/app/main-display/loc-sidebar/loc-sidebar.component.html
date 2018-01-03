@@ -15,9 +15,12 @@
         >
           <b>{{ location.dateView }}</b>
           {{ location.name }}
-          <div>
+          <div *ngIf="location.image[0]; else noImage">
             <img class="img img-responsive" [src]="location.image[0]">
           </div>
+          <ng-template #noImage>
+            <img class="img img-responsive" src="http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image">
+          </ng-template>
         </a>
       </ul>
     </div>

@@ -89,10 +89,10 @@ export class LocEditComponent implements OnInit {
 
     // IMAGE input
     newLocation.image = this.editLocationForm.value.locationData.images;
-    if (!newLocation['images']) {
-      const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
-      newLocation.image.push(noImagePlaceholder);
-    }
+    // if (!newLocation['images']) {
+    //   const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
+    //   newLocation.image.push(noImagePlaceholder);
+    // }
 
     // DATE input
     if (!this.editLocationForm.value.locationData.dateInput) {
