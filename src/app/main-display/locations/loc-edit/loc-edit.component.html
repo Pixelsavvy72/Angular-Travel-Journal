@@ -54,13 +54,26 @@
                   (click)="onAddImages()">Add Images
                 </button>
                 <div
-                class="form-group"
+                class="input-group col-xs-12"
                 *ngFor="let imageControl of getImageControls(); let i = index">
                     <label for="image">Image {{i + 1}} url:</label><br>
                     <input type="text"
                     class="form-control"
                     [formControlName]="i"
                     placeholder="http://www.example.com/my-image.png">
+
+                    <!-- Delete Image -->
+                    <span class="input-group-btn">
+                      <button
+                        style="margin-top: 1.75em;"
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="onDeleteImage(i)">
+                        X
+                      </button>
+
+                    </span>
+
                 </div>
                 <div *ngFor="let image of getImageControls()">
                   <div class="col-xs-6" *ngIf="image.value">

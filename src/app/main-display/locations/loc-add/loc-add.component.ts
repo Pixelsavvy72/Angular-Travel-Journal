@@ -58,7 +58,7 @@ export class LocAddComponent implements OnInit {
 
     this.newLocation.image = this.addLocationForm.value.locationData.images;
     if (!this.newLocation['images']) {
-      const noImagePlaceholder = 'http://via.placeholder.com/350x150?text=No+Image+Available';
+      const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
       this.newLocation.image.push(noImagePlaceholder);
     }
 
@@ -67,6 +67,7 @@ export class LocAddComponent implements OnInit {
        this.newLocation.dateView = this.dateNow;
        this.newLocation.dateActual = this.dateNowNoFormat;
      } else {
+       console.log(this.addLocationForm.value.locationData.dateInput);
        this.newLocation.dateView = this.addLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
        this.newLocation.dateActual = this.addLocationForm.value.locationData.dateInput.format();
      }
@@ -77,5 +78,6 @@ export class LocAddComponent implements OnInit {
     );
     this.router.navigate(['../'], {relativeTo: this.route});
   }
+
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LocationsDataService } from '../../../locationsData.service';
@@ -6,7 +7,6 @@ import { Location } from '../../../models/locationModel';
 import { IcDatepickerOptionsInterface } from 'ic-datepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import * as moment from 'moment';
 import { LocationSelectedService } from '../../../locationSelected.service';
 
 
@@ -21,9 +21,9 @@ export class LocEditComponent implements OnInit {
   editMode = false;
   datepickerOptions: IcDatepickerOptionsInterface;
   dateNow = moment().format('MMMM  Do, YYYY');
+  dateNowNoFormat = moment().format();
   currentDate: String;
   dateActual = moment().format();
-
 
   constructor(private locationDataService: LocationsDataService,
     private route: ActivatedRoute,
@@ -38,7 +38,7 @@ export class LocEditComponent implements OnInit {
           this.editMode = params['id'] != null;
           this.currentDate = this.locationDataService.getLocation(this.id).dateView;
           this.initForm();
-      }
+        }
     );
   }
   // this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
@@ -53,8 +53,8 @@ export class LocEditComponent implements OnInit {
       const location = this.locationDataService.getLocation(this.id);
       locationName = location.name;
       locationDesc = location.description;
-      locationDateView = location.dateView;
-      locationDateActual = location.dateActual;
+      locationDateView = '';
+      locationDateActual = '';
 
       // Check for images
       if (location['image']) {
@@ -81,12 +81,34 @@ export class LocEditComponent implements OnInit {
 
   onEditLocation() {
     const newLocation: Location = {
-       dateActual: this.editLocationForm.value.locationData.dateInput.format(),
-       dateView: this.editLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY'),
-       name: this.editLocationForm.value.locationData.nameInput,
-       image: this.editLocationForm.value.locationData.images,
-       description: this.editLocationForm.value.locationData.descriptionInput
+      dateActual: '',
+      dateView: '',
+      name: this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.nameInput),
+      image: [],
+      description: this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.descriptionInput)
     };
+
+    // this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.nameInput);
+    // this.newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.nameInput);;
+
+    newLocation.image = this.editLocationForm.value.locationData.images;
+    if (!newLocation['images'] && !this.editLocationForm.value.locationData.images) {
+      const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
+      newLocation.image.push(noImagePlaceholder);
+    }
+
+    if (!this.editLocationForm.value.locationData.dateInput) {
+       newLocation.dateView = this.locationDataService.getLocation(this.id).dateView;
+       newLocation.dateActual  = this.locationDataService.getLocation(this.id).dateActual;
+     } else {
+        newLocation.dateView = this.editLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
+        newLocation.dateActual = this.editLocationForm.value.locationData.dateInput.format();
+        // BOth EDIT and ADD add a moment object. On ADD, it works fine with format. Here, it doesn't. Can't format.
+       // NEED TO GET ORIGINAL DATE OBJECT IN HERE TO FORMAT> THIS IS ALREADY FORMATTED. WHY?
+       console.log(this.editLocationForm.value.locationData.dateInput);
+
+     }
+
 
     if (this.editMode) {
       this.locationDataService.editLocation(this.id, newLocation);
@@ -105,13 +127,17 @@ export class LocEditComponent implements OnInit {
     return(<FormArray>this.editLocationForm.get('locationData.images')).controls;
   }
 
+  onDeleteImage(index: number) {
+    (<FormArray>this.editLocationForm.get('locationData.images').removeAt(index));
+  }
+
   onDeleteLocation() {
     this.locationDataService.deleteLocation(this.id);
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
 

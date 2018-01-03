@@ -4,6 +4,7 @@ import { LocationSelectedService } from '../../locationSelected.service';
 import { Location } from '../../models/locationModel';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-loc-sidebar',
