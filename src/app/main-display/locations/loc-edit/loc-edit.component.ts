@@ -128,7 +128,7 @@ export class LocEditComponent implements OnInit {
   }
 
   onDeleteImage(index: number) {
-    (<FormArray>this.editLocationForm.get('locationData.images').removeAt(index));
+    (<FormArray>this.editLocationForm.get('locationData.images')).removeAt(index);
   }
 
   onDeleteLocation() {

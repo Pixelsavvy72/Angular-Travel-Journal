@@ -52,6 +52,10 @@ export class LocAddComponent implements OnInit {
     return(<FormArray>this.addLocationForm.get('locationData.images')).controls;
   }
 
+  onDeleteImage(index: number) {
+    (<FormArray>this.addLocationForm.get('locationData.images')).removeAt(index);
+  }
+
   onAddLocation() {
     this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
     this.newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.descriptionInput);

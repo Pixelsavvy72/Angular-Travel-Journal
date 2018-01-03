@@ -4,3 +4,4 @@ export class LocationSelectedService {
   locationWasSelected = new Subject();
   locationSelected = new Subject();
 }
+
