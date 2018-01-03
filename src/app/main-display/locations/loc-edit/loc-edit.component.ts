@@ -59,7 +59,6 @@ export class LocEditComponent implements OnInit {
       // Check for images
       if (location['image']) {
         for (let image of location.image) {
-          // Push new form group for each image because we need name and url.
           locationImages.push(
             new FormControl(image)
           );
@@ -88,24 +87,20 @@ export class LocEditComponent implements OnInit {
       description: this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.descriptionInput)
     };
 
-    // this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.nameInput);
-    // this.newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.nameInput);;
-
+    // IMAGE input
     newLocation.image = this.editLocationForm.value.locationData.images;
-    if (!newLocation['images'] && !this.editLocationForm.value.locationData.images) {
+    if (!newLocation['images']) {
       const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
       newLocation.image.push(noImagePlaceholder);
     }
 
+    // DATE input
     if (!this.editLocationForm.value.locationData.dateInput) {
        newLocation.dateView = this.locationDataService.getLocation(this.id).dateView;
        newLocation.dateActual  = this.locationDataService.getLocation(this.id).dateActual;
      } else {
         newLocation.dateView = this.editLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
         newLocation.dateActual = this.editLocationForm.value.locationData.dateInput.format();
-        // BOth EDIT and ADD add a moment object. On ADD, it works fine with format. Here, it doesn't. Can't format.
-       // NEED TO GET ORIGINAL DATE OBJECT IN HERE TO FORMAT> THIS IS ALREADY FORMATTED. WHY?
-       console.log(this.editLocationForm.value.locationData.dateInput);
 
      }
 
@@ -115,6 +110,12 @@ export class LocEditComponent implements OnInit {
     } else {
       this.locationDataService.addLocation(newLocation);
     }
+
+    // Clear images in image-list.component after an image is removed during an edit.
+    this.locationSelectedService.locationSelected.next(
+      {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''}
+    );
+
     this.onCancel();
   }
 
@@ -129,6 +130,7 @@ export class LocEditComponent implements OnInit {
 
   onDeleteImage(index: number) {
     (<FormArray>this.editLocationForm.get('locationData.images')).removeAt(index);
+
   }
 
   onDeleteLocation() {
