@@ -2,7 +2,7 @@
   <div class="row">
     <div class="row" id="content">
       <form [formGroup]="addLocationForm" (ngSubmit)="onAddLocation()">
-          <button class="btn btn-success btn-sm" type="submit" [disabled]="!addLocationForm.valid">Add Location</button>
+          <button class="btn btn-success btn-sm" type="submit" [disabled]="!addLocationForm.valid">Save</button>
           <button class="btn btn-warning btn-sm pull-right" routerLink="">Cancel</button>
           <hr>
         <div formGroupName="locationData">
@@ -27,6 +27,7 @@
               formControlName="descriptionInput"
               #descriptionInput></textarea><br>
 
+              <!-- Calendar using ic-datepicker -->
               <label for="date">Date  <span style="color: grey">(blank to set today's date)</span></label><br>
               <div class="row">
                 <div class="col-xs-1 text-right">

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { LocationsDataService } from '../../../locationsData.service';
+import { Component, OnInit } from '@angular/core';
+
 import { LocationSelectedService } from '../../../locationSelected.service';
 import { Location } from '../../../models/locationModel';
 
@@ -12,8 +12,7 @@ export class LocImageListComponent implements OnInit {
 
   selectedLocation: Location = {dateActual: '', dateView: Date.now().toString(), name: '', image: [], description: ''};
 
-  constructor(private locationsDataService: LocationsDataService,
-              private locationSelectedService: LocationSelectedService) { }
+  constructor(private locationSelectedService: LocationSelectedService) { }
 
   ngOnInit() {
     this.locationSelectedService.locationSelected.subscribe(

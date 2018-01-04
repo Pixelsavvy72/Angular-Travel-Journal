@@ -15,6 +15,7 @@
         >
           <b>{{ location.dateView }}</b>
           {{ location.name }}
+          <!-- Set placeholder image if no image exists -->
           <div *ngIf="location.image[0]; else noImage">
             <img class="img img-responsive" [src]="location.image[0]">
           </div>

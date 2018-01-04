@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+
 import { Location } from '../../../models/locationModel';
 import { LocationsDataService } from '../../../locationsData.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { Subscription } from 'rxjs/Subscription';
 import { LocationSelectedService } from '../../../locationSelected.service';
 
 @Component({
@@ -21,15 +21,11 @@ export class LocShowComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) { }
 
-
   ngOnInit() {
-
-    // This changes location based on route params instead.
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
         this.selectedLocation = this.locationsDataService.getLocation(this.id);
-        // return this.route.params;
         this.locationSelectedService.locationSelected.next(this.selectedLocation);
       });
 

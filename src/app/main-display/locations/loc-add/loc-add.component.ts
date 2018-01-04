@@ -1,13 +1,13 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, SecurityContext } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Validators, FormArray, FormGroup, FormControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { IcDatepickerOptionsInterface } from 'ic-datepicker';
+
 import { LocationsDataService } from '../../../locationsData.service';
+import { LocationSelectedService } from '../../../locationSelected.service';
 import { Location } from '../../../models/locationModel';
 import * as moment from 'moment';
-import { Validators, FormArray, FormGroup, FormControl } from '@angular/forms';
-import { IcDatepickerOptionsInterface } from 'ic-datepicker';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LocationSelectedService } from '../../../locationSelected.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 
 
 
@@ -21,8 +21,6 @@ export class LocAddComponent implements OnInit {
   dateNow = moment().format('MMMM  Do, YYYY');
   dateNowNoFormat = moment().format();
   addLocationForm: FormGroup;
-  newLocation: Location = {dateActual: this.dateNowNoFormat, dateView: this.dateNow, name: '', image: [], description: ''};
-  value: any;
 
   constructor(private locationsDataService: LocationsDataService,
               private locationSelectedService: LocationSelectedService,
@@ -31,7 +29,6 @@ export class LocAddComponent implements OnInit {
               private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-
     this.addLocationForm = new FormGroup({
       'locationData' : new FormGroup({
         'nameInput' : new FormControl(null, Validators.required),
@@ -57,26 +54,31 @@ export class LocAddComponent implements OnInit {
   }
 
   onAddLocation() {
-    this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
-    this.newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.descriptionInput);
+    const newLocation: Location = {
+      dateActual: '',
+      dateView: '',
+      name: this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput),
+      image: [],
+      description: this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.descriptionInput)
+    };
 
-    this.newLocation.image = this.addLocationForm.value.locationData.images;
-    // if (!this.newLocation['images']) {
-    //   const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
-    //   this.newLocation.image.push(noImagePlaceholder);
-    // }
+    newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
+    newLocation.description = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.descriptionInput);
 
-    this.newLocation.dateActual = this.dateNowNoFormat;
+    newLocation.image = this.addLocationForm.value.locationData.images;
+
+    // If no date selected, use today's date.
+    newLocation.dateActual = this.dateNowNoFormat;
     if (!this.addLocationForm.value.locationData.dateInput) {
-       this.newLocation.dateView = this.dateNow;
-       this.newLocation.dateActual = this.dateNowNoFormat;
+       newLocation.dateView = this.dateNow;
+       newLocation.dateActual = this.dateNowNoFormat;
      } else {
        console.log(this.addLocationForm.value.locationData.dateInput);
-       this.newLocation.dateView = this.addLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
-       this.newLocation.dateActual = this.addLocationForm.value.locationData.dateInput.format();
+       newLocation.dateView = this.addLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
+       newLocation.dateActual = this.addLocationForm.value.locationData.dateInput.format();
      }
 
-    this.locationsDataService.addLocation(this.newLocation);
+    this.locationsDataService.addLocation(newLocation);
     this.locationSelectedService.locationSelected.next(
       {dateActual: Date.now(), dateView: Date.now().toString(), name: '', image: [], description: ''}
     );

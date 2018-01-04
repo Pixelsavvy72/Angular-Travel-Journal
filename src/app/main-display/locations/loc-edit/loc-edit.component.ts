@@ -1,13 +1,13 @@
-import * as moment from 'moment';
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { LocationsDataService } from '../../../locationsData.service';
-import { Location } from '../../../models/locationModel';
-import { IcDatepickerOptionsInterface } from 'ic-datepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { IcDatepickerOptionsInterface } from 'ic-datepicker';
 
+import { LocationsDataService } from '../../../locationsData.service';
 import { LocationSelectedService } from '../../../locationSelected.service';
+import { Location } from '../../../models/locationModel';
+import * as moment from 'moment';
 
 
 @Component({
@@ -16,12 +16,10 @@ import { LocationSelectedService } from '../../../locationSelected.service';
   styleUrls: ['./loc-edit.component.css']
 })
 export class LocEditComponent implements OnInit {
+  datepickerOptions: IcDatepickerOptionsInterface;
   editLocationForm: FormGroup;
   id: number;
   editMode = false;
-  datepickerOptions: IcDatepickerOptionsInterface;
-  dateNow = moment().format('MMMM  Do, YYYY');
-  dateNowNoFormat = moment().format();
   currentDate: String;
   dateActual = moment().format();
 
@@ -36,12 +34,13 @@ export class LocEditComponent implements OnInit {
         (params: Params) => {
           this.id = +params['id'];
           this.editMode = params['id'] != null;
+          // Used in html to show current date.
           this.currentDate = this.locationDataService.getLocation(this.id).dateView;
           this.initForm();
         }
     );
   }
-  // this.newLocation.name = this.sanitizer.sanitize(SecurityContext.HTML, this.addLocationForm.value.locationData.nameInput);
+
   private initForm() {
     let locationName = '';
     let locationDesc = '';
@@ -49,6 +48,7 @@ export class LocEditComponent implements OnInit {
     let locationDateActual = this.dateActual;
     let locationImages = new FormArray([]);
 
+    // Populate the fields except for date.
     if (this.editMode) {
       const location = this.locationDataService.getLocation(this.id);
       locationName = location.name;
@@ -56,7 +56,7 @@ export class LocEditComponent implements OnInit {
       locationDateView = '';
       locationDateActual = '';
 
-      // Check for images
+      // Check for images in array. If they exist, add and populate controls.
       if (location['image']) {
         for (let image of location.image) {
           locationImages.push(
@@ -87,15 +87,12 @@ export class LocEditComponent implements OnInit {
       description: this.sanitizer.sanitize(SecurityContext.HTML, this.editLocationForm.value.locationData.descriptionInput)
     };
 
-    // IMAGE input
     newLocation.image = this.editLocationForm.value.locationData.images;
-    // if (!newLocation['images']) {
-    //   const noImagePlaceholder = 'http://via.placeholder.com/150x75/ffffff/8b0000?text=No+Image';
-    //   newLocation.image.push(noImagePlaceholder);
-    // }
 
     // DATE input
     if (!this.editLocationForm.value.locationData.dateInput) {
+      // If no date is entered, set it here from previous value in array.
+      // Must be done here to have conditional check pass/fail.
        newLocation.dateView = this.locationDataService.getLocation(this.id).dateView;
        newLocation.dateActual  = this.locationDataService.getLocation(this.id).dateActual;
      } else {
