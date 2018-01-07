@@ -22,6 +22,7 @@ export class LocEditComponent implements OnInit {
   editMode = false;
   currentDate: String;
   dateActual = moment().format();
+  dateNow = moment().format('MMMM  Do, YYYY');
 
   constructor(private locationDataService: LocationsDataService,
     private route: ActivatedRoute,
@@ -35,7 +36,9 @@ export class LocEditComponent implements OnInit {
           this.id = +params['id'];
           this.editMode = params['id'] != null;
           // Used in html to show current date.
-          this.currentDate = this.locationDataService.getLocation(this.id).dateView;
+          if (this.editMode) {
+            this.currentDate = this.locationDataService.getLocation(this.id).dateView;
+          }
           this.initForm();
         }
     );
@@ -90,16 +93,21 @@ export class LocEditComponent implements OnInit {
     newLocation.image = this.editLocationForm.value.locationData.images;
 
     // DATE input
-    if (!this.editLocationForm.value.locationData.dateInput) {
+    if (!this.editLocationForm.value.locationData.dateInput && this.editMode) {
       // If no date is entered, set it here from previous value in array.
       // Must be done here to have conditional check pass/fail.
        newLocation.dateView = this.locationDataService.getLocation(this.id).dateView;
        newLocation.dateActual  = this.locationDataService.getLocation(this.id).dateActual;
-     } else {
-        newLocation.dateView = this.editLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
-        newLocation.dateActual = this.editLocationForm.value.locationData.dateInput.format();
-
      }
+
+     if (!this.editLocationForm.value.locationData.dateInput) {
+      newLocation.dateView = this.dateNow;
+      newLocation.dateActual = this.dateActual;
+    } else {
+      console.log(this.editLocationForm.value.locationData.dateInput);
+      newLocation.dateView = this.editLocationForm.value.locationData.dateInput.format('MMMM  Do, YYYY');
+      newLocation.dateActual = this.editLocationForm.value.locationData.dateInput.format();
+    }
 
 
     if (this.editMode) {
@@ -136,7 +144,7 @@ export class LocEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../../'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 
